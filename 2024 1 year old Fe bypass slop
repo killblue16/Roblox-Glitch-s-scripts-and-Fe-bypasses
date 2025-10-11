@@ -2,6 +2,7 @@
 -- this script was supposed to bypass audio by playing audio universal and bypassing into the controlgui and the erraz from coregui.
 -- we did have an unseen before leaked marketplace.lua but we sacrificed other scripts instead. ;-;
 -- olddorito with killblue16 and ieft_boy
+-- originally created in 2024
 --!nolint DeprecatedApi
 --!native
 --!optimize 2
