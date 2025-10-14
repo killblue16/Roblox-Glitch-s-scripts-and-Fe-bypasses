@@ -1,0 +1,160 @@
+local Players = game:GetService("Players")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local UserInputService = game:GetService("UserInputService")
+local StarterGui = game:GetService("StarterGui")
+local player = Players.LocalPlayer
+
+if player:WaitForChild("PlayerGui"):FindFirstChild("DeltaInputGUI") then
+    player.PlayerGui.DeltaInputGUI:Destroy()
+end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "DeltaInputGUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+StarterGui:SetCore("SendNotification", {Title = "Notification"; Text = "Made by Hecker"; Duration = 5})
+
+local function makeToggleButton(name, pos, parent)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 80, 0, 40)
+    btn.Position = pos
+    btn.Text = name
+    btn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    btn.TextColor3 = Color3.fromRGB(0,255,255)
+    btn.BackgroundTransparency = 0.2
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 16
+    btn.Parent = parent
+    return btn
+end
+
+local kbToggleBtn = makeToggleButton("Keyboard OFF", UDim2.new(0.05,0,0.05,0), gui)
+local mouseToggleBtn = makeToggleButton("Mouse OFF", UDim2.new(0.2,0,0.05,0), gui)
+
+local kbFrame = Instance.new("Frame")
+kbFrame.Size = UDim2.new(0, 500, 0, 180)
+kbFrame.Position = UDim2.new(0.5, -250, 0.7, 0)
+kbFrame.BackgroundColor3 = Color3.fromRGB(25,25,25)
+kbFrame.BackgroundTransparency = 0.35
+kbFrame.Active = true
+kbFrame.Draggable = true
+kbFrame.Parent = gui
+kbFrame.Visible = false
+
+local function makeKey(parent, text, keycode, pos, size)
+    local btn = Instance.new("TextButton")
+    btn.Parent = parent
+    btn.Size = UDim2.new(0, size.X, 0, size.Y)
+    btn.Position = UDim2.new(0, pos.X, 0, pos.Y)
+    btn.Text = text
+    btn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    btn.TextColor3 = Color3.fromRGB(0,255,255)
+    btn.BackgroundTransparency = 0.15
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 12
+    btn.AutoButtonColor = true
+    btn.ZIndex = 2
+    btn.TextWrapped = true
+    btn.MouseButton1Down:Connect(function() VirtualInputManager:SendKeyEvent(true, keycode, false, game) end)
+    btn.MouseButton1Up:Connect(function() VirtualInputManager:SendKeyEvent(false, keycode, false, game) end)
+end
+
+local kbRows = {
+    {{"Esc",Enum.KeyCode.Escape},{"F1",Enum.KeyCode.F1},{"F2",Enum.KeyCode.F2},{"F3",Enum.KeyCode.F3},{"F4",Enum.KeyCode.F4},
+     {"F5",Enum.KeyCode.F5},{"F6",Enum.KeyCode.F6},{"F7",Enum.KeyCode.F7},{"F8",Enum.KeyCode.F8},{"F9",Enum.KeyCode.F9},
+     {"F10",Enum.KeyCode.F10},{"F11",Enum.KeyCode.F11},{"F12",Enum.KeyCode.F12}},
+    {{"1",Enum.KeyCode.One},{"2",Enum.KeyCode.Two},{"3",Enum.KeyCode.Three},{"4",Enum.KeyCode.Four},
+     {"5",Enum.KeyCode.Five},{"6",Enum.KeyCode.Six},{"7",Enum.KeyCode.Seven},{"8",Enum.KeyCode.Eight},
+     {"9",Enum.KeyCode.Nine},{"0",Enum.KeyCode.Zero},{"-",Enum.KeyCode.Minus},{"=",Enum.KeyCode.Equals},{"Bksp",Enum.KeyCode.Backspace}},
+    {{"Tab",Enum.KeyCode.Tab},{"Q",Enum.KeyCode.Q},{"W",Enum.KeyCode.W},{"E",Enum.KeyCode.E},{"R",Enum.KeyCode.R},
+     {"T",Enum.KeyCode.T},{"Y",Enum.KeyCode.Y},{"U",Enum.KeyCode.U},{"I",Enum.KeyCode.I},{"O",Enum.KeyCode.O},
+     {"P",Enum.KeyCode.P},{"[",Enum.KeyCode.LeftBracket},{"]",Enum.KeyCode.RightBracket},{"\\",Enum.KeyCode.BackSlash}},
+    {{"Caps",Enum.KeyCode.CapsLock},{"A",Enum.KeyCode.A},{"S",Enum.KeyCode.S},{"D",Enum.KeyCode.D},{"F",Enum.KeyCode.F},
+     {"G",Enum.KeyCode.G},{"H",Enum.KeyCode.H},{"J",Enum.KeyCode.J},{"K",Enum.KeyCode.K},{"L",Enum.KeyCode.L},
+     {";",Enum.KeyCode.Semicolon},{"'",Enum.KeyCode.Quote},{"Enter",Enum.KeyCode.Return}},
+    {{"Shift",Enum.KeyCode.LeftShift},{"Z",Enum.KeyCode.Z},{"X",Enum.KeyCode.X},{"C",Enum.KeyCode.C},{"V",Enum.KeyCode.V},
+     {"B",Enum.KeyCode.B},{"N",Enum.KeyCode.N},{"M",Enum.KeyCode.M},{",",Enum.KeyCode.Comma},{".",Enum.KeyCode.Period},
+     {"/",Enum.KeyCode.Slash},{"Shift",Enum.KeyCode.RightShift}},
+    {{"Ctrl",Enum.KeyCode.LeftControl},{"Alt",Enum.KeyCode.LeftAlt},{"Space",Enum.KeyCode.Space},{"Alt",Enum.KeyCode.RightAlt},
+     {"Ctrl",Enum.KeyCode.RightControl},{"←",Enum.KeyCode.Left},{"↑",Enum.KeyCode.Up},{"↓",Enum.KeyCode.Down},{"→",Enum.KeyCode.Right}}
+}
+
+local startY = 5
+for _, row in ipairs(kbRows) do
+    local x = 5
+    for _, k in ipairs(row) do
+        makeKey(kbFrame, k[1], k[2], Vector2.new(x, startY), Vector2.new(36, 26))
+        x = x + 40
+    end
+    startY = startY + 30
+end
+
+local cursor = Instance.new("ImageLabel")
+cursor.Size = UDim2.new(0, 24, 0, 24)
+cursor.Position = UDim2.new(0.5, -12, 0.5, -12)
+cursor.BackgroundTransparency = 1
+cursor.Image = "rbxassetid://7072727164"
+cursor.ZIndex = 10
+cursor.Parent = gui
+
+local mouseFrame = Instance.new("Frame")
+mouseFrame.Size = UDim2.new(0, 40, 0, 40)
+mouseFrame.Position = UDim2.new(0.5, -20, 0.5, -20)
+mouseFrame.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+mouseFrame.BackgroundTransparency = 0.3
+mouseFrame.ZIndex = 9
+mouseFrame.Active = true
+mouseFrame.Draggable = true
+mouseFrame.Parent = gui
+mouseFrame.Visible = false
+
+local mouseEnabled = false
+local kbEnabled = false
+local clickDown = false
+
+kbToggleBtn.MouseButton1Click:Connect(function()
+    kbEnabled = not kbEnabled
+    kbFrame.Visible = kbEnabled
+    kbToggleBtn.Text = kbEnabled and "Keyboard ON" or "Keyboard OFF"
+end)
+
+mouseToggleBtn.MouseButton1Click:Connect(function()
+    mouseEnabled = not mouseEnabled
+    mouseFrame.Visible = mouseEnabled
+    cursor.Visible = mouseEnabled
+    mouseToggleBtn.Text = mouseEnabled and "Mouse ON" or "Mouse OFF"
+end)
+
+local function sendClick(x, y, down)
+    VirtualInputManager:SendMouseButtonEvent(x, y, 0, down, game, 0)
+end
+
+mouseFrame.InputBegan:Connect(function(input)
+    if not mouseEnabled then return end
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        clickDown = true
+        sendClick(mouseFrame.AbsolutePosition.X + mouseFrame.AbsoluteSize.X/2, mouseFrame.AbsolutePosition.Y + mouseFrame.AbsoluteSize.Y/2, true)
+    end
+end)
+
+mouseFrame.InputEnded:Connect(function(input)
+    if not mouseEnabled then return end
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        clickDown = false
+        sendClick(mouseFrame.AbsolutePosition.X + mouseFrame.AbsoluteSize.X/2, mouseFrame.AbsolutePosition.Y + mouseFrame.AbsoluteSize.Y/2, false)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if not mouseEnabled then return end
+    if input.UserInputType == Enum.UserInputType.Touch and clickDown then
+        sendClick(mouseFrame.AbsolutePosition.X + mouseFrame.AbsoluteSize.X/2, mouseFrame.AbsolutePosition.Y + mouseFrame.AbsoluteSize.Y/2, true)
+    end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if mouseEnabled then
+        cursor.Position = UDim2.new(0, mouseFrame.AbsolutePosition.X + mouseFrame.AbsoluteSize.X/2 - 12, 0, mouseFrame.AbsolutePosition.Y + mouseFrame.AbsoluteSize.Y/2 - 12)
+    end
+end)
