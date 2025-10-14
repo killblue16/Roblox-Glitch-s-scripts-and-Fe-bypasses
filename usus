@@ -1,0 +1,54 @@
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Info",
+    Text = "Made by Hecker",
+    Duration = 5
+})
+
+for _, obj in ipairs(game:GetDescendants()) do
+    if obj:IsA("RemoteEvent") then
+        pcall(function()
+            obj:FireServer()
+        end)
+    end
+end
+
+task.delay(10, function()
+    local function fireTool()
+        local char = player.Character
+        if not char then return end
+        local tool = char:FindFirstChildOfClass("Tool")
+        if not tool then return end
+        if tool.Activate then
+            pcall(function() tool:Activate() end)
+        end
+        for _, obj in ipairs(tool:GetDescendants()) do
+            if obj:IsA("RemoteEvent") then
+                pcall(function() obj:FireServer() end)
+            elseif obj:IsA("RemoteFunction") then
+                pcall(function() obj:InvokeServer() end)
+            elseif obj:IsA("BindableEvent") then
+                pcall(function() obj:Fire() end)
+            elseif obj:IsA("BindableFunction") then
+                pcall(function() obj:Invoke() end)
+            elseif obj:IsA("ClickDetector") then
+                pcall(function() fireclickdetector(obj) end)
+            end
+        end
+    end
+
+    UserInputService.TouchTap:Connect(function()
+        fireTool()
+    end)
+
+    UserInputService.InputBegan:Connect(function(input, gpe)
+        if gpe then return end
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            fireTool()
+        end
+    end)
+end)
