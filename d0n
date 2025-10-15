@@ -1,4 +1,4 @@
--- copy for the player friend dontmesswithmeifyouu
+-- copy for the player friend C00lKldd101
 local c00lguiFE = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
@@ -1801,7 +1801,7 @@ local function PLEGWK_fake_script() -- oldplrlist.LocalScript
 		ADMINS =
 			{ -- add your name = 1 to get a star icon.  Add your name = image to get a custom icon.
 				evolving888 = "http://www.roblox.com/asset?id=148012526",
-				dontmesswithmeifyouu = "http://www.roblox.com/asset?id=148012526",
+				C00lKldd101 = "http://www.roblox.com/asset?id=148012526",
 				enter777 = "http://www.roblox.com/asset?id=148012526",
 				c00lkidd5 = "https://www.roblox.com/asset?id=9262784513",
 				KanekiiiiianYT = "https://www.roblox.com/asset?id=1061142935",
@@ -1809,7 +1809,7 @@ local function PLEGWK_fake_script() -- oldplrlist.LocalScript
 
 
 		ALIASES = {
-			dontmesswithmeifyouu = "Creepy",
+			C00lKldd101 = "Creepy",
 			Minish1111 = "Minish",
 		}
 
