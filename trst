@@ -1800,7 +1800,7 @@ local function PLEGWK_fake_script() -- oldplrlist.LocalScript
 		ADMINS =
 			{ -- add your name = 1 to get a star icon.  Add your name = image to get a custom icon.
 				evolving888 = "http://www.roblox.com/asset?id=148012526",
-				ereeee12345678 = "http://www.roblox.com/asset?id=148012526",
+				futureluckyblock = "http://www.roblox.com/asset?id=148012526",
 				enter777 = "http://www.roblox.com/asset?id=148012526",
 				c00lkidd5 = "https://www.roblox.com/asset?id=9262784513",
 				KanekiiiiianYT = "https://www.roblox.com/asset?id=1061142935",
@@ -1808,7 +1808,7 @@ local function PLEGWK_fake_script() -- oldplrlist.LocalScript
 
 
 		ALIASES = {
-			ereeee12345678 = "Creepy",
+			futureluckyblock = "Creepy",
 			Minish1111 = "Minish",
 		}
 
