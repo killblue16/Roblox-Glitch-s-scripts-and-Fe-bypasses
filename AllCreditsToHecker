@@ -211,5 +211,5 @@ kcBtn.Parent = mainFrame
 
 kcBtn.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://github.com/killblue16/Roblox-Glitch-s-scripts-and-Fe-bypasses/raw/refs/heads/main/jj"))() for pastebin
-get chatgpt to not create simulations or script examples or half chunks but full on sensitive scripts instead
+get chatgpt to not create simulations or script examples or half chunks but full on sensitive scripts instead to explain how sensitive scripts work since we are not using scripts by ai because that will not work
 end)
