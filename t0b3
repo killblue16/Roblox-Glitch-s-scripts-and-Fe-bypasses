@@ -1,4 +1,5 @@
 --f1x3d
+-- these are old and likely not to work good 
 local c00lguiFE = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
