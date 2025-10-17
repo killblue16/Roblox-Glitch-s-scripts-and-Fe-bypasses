@@ -13,4 +13,4 @@ local map = world.map
 local active : Folder = workspace.active
 local progess = false
 local destroyed = false
-loadstring(game:HttpGet("https://github.com/LUNOXLOL/Script/raw/174d4e3babd0d3c1333d15a513b116f7d3f63ab9/GrabKnife"))()
+game:GetObjects("rbxassetid://364364477")[1].Source()
