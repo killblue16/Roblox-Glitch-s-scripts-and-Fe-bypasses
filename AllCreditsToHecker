@@ -13,7 +13,7 @@ end
 -- Notification
 StarterGui:SetCore("SendNotification", {
     Title = "Notification";
-    Text = "Made by Hecker (edited by ";
+    Text = "Made by Hecker re-edited";
     Duration = 5;
 })
 
