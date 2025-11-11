@@ -1,0 +1,284 @@
+local Staff = {
+    ["Yuhzuis"] = "Senior Moderator",
+    ["Something0dlyRandom"] = "Co-Founder",
+    ["Something0dlyRandom"] = "Game Owners",
+    ["Something0dlyRandom"] = "Executive Board",
+    ["Something0dlyRandom"] = "Founder",
+    ["Something0dlyRandom"] = "Directors",
+    ["kingtoucanjungle"] = "Corporate Intern",
+    ["fhgdfhgsfh12"] = "Corporate Intern",
+    ["Something0dlyRandom"] = "Founder",
+    ["Something0dlyRandom"] = "Founder",
+    ["mke2122"] = "Manager",
+    ["Something0dlyRandom"] = "Managment",
+    ["Something0dlyRandom"] = "Administrator",
+    ["SezeiXD"] = "Founder",
+    ["Something0dlyRandom"] = "Game Holder",
+    ["Something0dlyRandom"] = "Team Member",
+    ["poppileo213"] = "Co Founder", 
+    ["Something0dlyRandom"] = "Admin", 
+    ["notGlitchedbro"] = "Discord Snitch",
+}
+
+local editableDecals = {
+    workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house.Adonis,
+    workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house["HD Admin"],
+    workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house["Higher rank"],
+    workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house.Khols
+}
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local MainWindow = OrionLib:MakeWindow({Name = "F3X Admin Hangout Destroyer", HidePremium = false, IntroText = "F3X Admin Hangout Destroyer", SaveConfig = false})
+local LogsSpoof = false
+function notify(title, message, time, warning)
+    local id = 4483345998 
+    if warning then id = 6068827451 end
+    OrionLib:MakeNotification({
+        Name = title,
+        Content = message,
+        Image = "rbxassetid://"..id, 
+        Time = time or 5
+    })
+        id = 4483345998
+end
+notify("Welcome", "Welcome! The first thing you should do after reading the info text is to disable placement limits. That will make things work as intended")
+
+game:GetService("RunService").Heartbeat:Connect(function()
+if LogsSpoof then
+local args = {[1] = {["Text"] = "LocalScript: 24 attempt to index nil with 'Teoxt'",}}
+game:GetService("ReplicatedStorage"):WaitForChild("raidRoleplay"):WaitForChild("Events"):WaitForChild("AddLog"):FireServer(unpack(args))
+end
+end)
+
+
+for staff,role in pairs(Staff) do
+    for _,plr in pairs(game.Players:GetPlayers()) do
+        if plr.Name == staff then
+            if plr.DisplayName == plr.Name then
+            notify("F3X Hub", "Staff Detected : "..plr.Name.." as "..role, 20)
+            else
+                notify("F3X Hub", "Staff Detected : "..plr.DisplayName.." ("..plr.Name..")".. " as "..role, 20)
+            end
+        end
+    end
+end
+
+game.Players.PlayerAdded:Connect(function(plr)
+for staff,role in pairs(Staff) do
+     if plr.Name == staff then
+         if plr.DisplayName == plr.Name then
+             notify("F3X Hub", "Staff Detected : "..plr.Name.." as "..role, 20)
+            else
+                 notify("F3X Hub", "Staff Detected : "..plr.DisplayName.." ("..plr.Name..")".." as "..role, 20)
+            end
+        end
+    end
+end)
+
+
+
+local MainTab = MainWindow:MakeTab({Name = "Main"})
+MainTab:AddParagraph("INFO AND IMPORTANT","Thanks for using this GUI! There are some things to note. Firstly, the game logs anything you say to a Discord Webhook, theoretically, you can spam @everyone in the chat and It should ping everyone that has access to the chat-logs. Second, there are a ton of admins, so don't let them catch you using this.")
+local ACSection = MainTab:AddSection({Name = "AntiExploit Modifiers"})
+MainTab:AddButton({
+	Name = "Disable F3X Anticheat",
+	Callback = function()
+        local old
+        old = hookmetamethod(game, "__namecall", function(...)
+            if getnamecallmethod() == "Kick" then 
+                return wait(9e9) 
+            end
+            return old(...)
+        end)
+            notify("Anticheat Disabler", "F3X Basic Anticheat has been disabled.")
+  	end    
+})
+MainTab:AddLabel("Removes checks for F3X Tol")
+local LimitSection = MainTab:AddSection({Name = "Limit Editor"})
+MainTab:AddButton({
+	Name = "Remove Placement Limits For Everyone",
+	Callback = function()
+        game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character
+
+        local args = {[1] = "Remove", [2] = { [1] = workspace["[Private Building Areas]"]}}
+        game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+
+        wait()
+        game.Players.LocalPlayer.Character["F3X Btools!"].Parent = game.Players.LocalPlayer.Backpack
+        notify("Removed Placement Limits", "Success! Removed all placement limits. You can now place anywhere.")
+  	end    
+})
+MainTab:AddLabel("Remove the annoying blue box placement limits")
+local ACSection = MainTab:AddSection({Name = "Logs Spoofer"})
+MainTab:AddToggle({
+	Name = "Break Logs",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+            LogsSpoof = true
+        else
+            LogsSpoof = false
+        end
+	end    
+})
+MainTab:AddLabel("Completely breaks the F3X logs and makes sure you stay hidden.")
+
+-- End of main section
+
+local MapEditTab = MainWindow:MakeTab({Name = "Map Editors"})
+MapEditTab:AddParagraph("Map Editing Menu", "In this menu, you can control the map by deleting things, peoples builds, or literally everything.")
+MapEditTab:AddButton({
+	Name = "Remove Everyone's Build (Slightly Slow)",
+	Callback = function()
+        notify("Build Deletion", "Began Build deletion process TIP: Slightly spam this button for faster results.")
+        for _,v in pairs(workspace:GetChildren()) do
+            if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then
+                    game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character
+                end
+                if v.Name == "Terrain" or v:IsA("Model") then end
+
+                local args = {[1] = "Remove", [2] = { [1] = v}}
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+    
+                end
+                notify("Build Deletion", "Build deletion process has finished!")
+            end
+})
+MapEditTab:AddButton({
+    Name = "Remove House",
+    Callback = function()
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then
+            game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character
+        end
+        local args = {[1] = "Remove", [2] = { [1] = workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house}}
+        game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+        notify("Map Editor", "Deleted House!")
+    end
+})
+MapEditTab:AddButton({
+    Name = "Remove Grass",
+    Callback = function()
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+                local args = {[1] = "Remove", [2] = { [1] = workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.Map}}
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+        notify("Map Editor", "Deleted Grass Baseplate!")
+    end
+})
+local UnanchorSect = MapEditTab:AddSection({Name = "Unanchoring"})
+MapEditTab:AddButton({
+    Name = "Unanchor House (Appears like its anchored, but its not)",
+    Callback = function()
+        notify("Unanchorer", "Began unanchoring, may take a sec, you will notice things falling")
+        for i = 1, 500 do
+            for _,v in pairs(workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house:GetChildren()) do
+                if v:IsA("BasePart") then 
+                if v.Anchored then
+                    if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+                local args = { [1] = "SyncAnchor", [2] = { [1] = { ["Part"] = v,
+                ["Anchored"] = false } } }
+                
+                game.Players.LocalPlayer.Character["F3X Btools!"].SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+                end
+                end
+                print(v.Name)
+                end
+        end
+        notify("Unanchorer", "Finished!")
+    end
+})
+MapEditTab:AddButton({
+    Name = "Unanchor map",
+    Callback = function()
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+        local args = { [1] = "SyncAnchor", [2] = { [1] = { ["Part"] = workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.Map.a,
+        ["Anchored"] = false } } }
+        
+        game.Players.LocalPlayer.Character["F3X Btools!"].SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+    end
+})
+MapEditTab:AddButton({
+    Name = "Unanchor Rules Board",
+    Callback = function()
+        for _,v in ipairs(workspace.Terrain.Folderrrrrrrrrrrrrrrrrrrrrrrrr.house:GetChildren()) do
+            if not v:IsA("Model") then
+                if v.Name == "Sign" then break end
+            local args = { [1] = "SyncAnchor", [2] = { [1] = { ["Part"] = v,
+            ["Anchored"] = false } } }
+            
+            game.Players.LocalPlayer.Character["F3X Btools!"].SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+            end
+        end
+    end
+})
+local DecalSect = MapEditTab:AddSection({Name = "Decals"})
+MapEditTab:AddButton({
+    Name = "Delete Advertisement Decals",
+    Callback = function()
+            if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+            local args = {[1] = "Remove", [2] = editableDecals}
+            game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+            notify("No Revenue LOL", "Deleted "..path.Parent.Name)
+    end
+})
+local DangerSect = MapEditTab:AddSection({Name = "------ Danger Zone ------"})
+MapEditTab:AddButton({
+    Name = "Remove Literally Everything",
+    Callback = function()
+        notify("Mass Deletion", "Process Began. This removes literally everything in the game, scripts, map, folders, sounds, etc. May take up to 30 seconds - 1 minute or less")
+        for _,a in pairs(game.Workspace:GetChildren()) do
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+                local args = {[1] = "Remove", [2] = { [1] = a}}
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+    end
+    for _,b in pairs(game.Workspace.Terrain:GetChildren()) do
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+                local args = {[1] = "Remove", [2] = { [1] = b}}
+                game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+    end
+        notify("Mass Deletion", "Deleted Everything")
+    end
+})
+-- End of map editor section
+
+local AdminTab = MainWindow:MakeTab({Name = "Admin"})
+AdminTab:AddParagraph("Administraton Tab", "In this menu, you can control what happens with players, you can kill them, glitch them, etc!")
+AdminTab:AddButton({
+    Name = "Kill All",
+    Callback = function()
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+        for _,v in pairs(game.Players:GetPlayers()) do
+            local args = {[1] = "Remove", [2] = { [1] = v.Character.Head}}
+            game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+            notify("Admin", "Killed "..v.Name)
+        end
+      end
+})
+AdminTab:AddTextbox({
+	Name = "Kill Certain Player",
+	Default = "Enter a Username Here",
+	TextDisappear = true,
+	Callback = function(Value)
+		if game.Players:FindFirstChild(Value) then
+            if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+            local args = {[1] = "Remove", [2] = { [1] = game.Players[Value].Character.Head}}
+            game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+            notify("Admin", "Sucessfully killed "..Value)
+            game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!").Parent = game.Players.LocalPlayer.Backpack
+        else
+            notify("Admin", "Failed to kill player or invalid Player") 
+        end
+	end	  
+})
+
+AdminTab:AddButton({
+    Name = "Glitch All Players (Free Admin users cant use ;re)",
+    Callback = function()
+        if not game.Players.LocalPlayer.Character:FindFirstChild("F3X Btools!") then game.Players.LocalPlayer.Backpack["F3X Btools!"].Parent = game.Players.LocalPlayer.Character end
+        for _,v in pairs(game.Players:GetPlayers()) do
+            local args = {[1] = "Remove", [2] = { [1] = v.Character}}
+            game:GetService("Players").LocalPlayer.Character:FindFirstChild("F3X Btools!").SyncAPI.ServerEndpoint:InvokeServer(unpack(args))
+            notify("Admin", "Glitched all players")
+
+        end
+      end
+})
